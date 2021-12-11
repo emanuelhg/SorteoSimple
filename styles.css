@@ -41,6 +41,14 @@ input[type=number] {
     width: 50px;
   }
 
+  a {
+    text-decoration: none !important;
+  }
+
+  a:-webkit-any-link {
+      text-decoration: none;
+  }
+
   @media only screen and (max-width: 768px) {
       .btnEjecutar {
           padding-bottom: 1.125rem;
