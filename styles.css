@@ -1,0 +1,48 @@
+body {
+    background-image: linear-gradient(to bottom, #f4f9ff, #f1f5fe, #eef1fd, #ededfb, #ede9f9);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+h1  {
+    padding-top: 1rem;
+}
+
+.form-tickets {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.form-control {
+    text-align: center;
+}
+
+
+.subTextarea {
+    padding-bottom: 1rem;
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: salmon;
+}
+
+.btnEjecutar {
+    padding-top: 1rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    text-align: center;
+    width: 50px;
+  }
+
+  @media only screen and (max-width: 768px) {
+      .btnEjecutar {
+          padding-bottom: 1.125rem;
+      }
+  }
