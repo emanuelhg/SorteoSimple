@@ -4,8 +4,9 @@ body {
     background-attachment: fixed;
 }
 
-h1  {
+h1 {
     padding-top: 1rem;
+    color: #0074D9;
 }
 
 .form-tickets {
@@ -22,7 +23,7 @@ h1  {
     padding-bottom: 1rem;
     font-size: 1.125rem;
     font-weight: bold;
-    color: salmon;
+    color: #F012BE;
 }
 
 .btnEjecutar {
@@ -31,26 +32,29 @@ h1  {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 input[type=number] {
     -moz-appearance: textfield;
     text-align: center;
     width: 50px;
-  }
-
-  a {
+}
+p {
+    color:#639fe2;
+    font-weight: bold;
+}
+a {
     text-decoration: none !important;
-  }
+}
 
-  a:-webkit-any-link {
-      text-decoration: none;
-  }
+a:-webkit-any-link {
+    text-decoration: none;
+}
 
-  @media only screen and (max-width: 768px) {
-      .btnEjecutar {
-          padding-bottom: 1.125rem;
-      }
-  }
+@media only screen and (max-width: 768px) {
+    .btnEjecutar {
+        padding-bottom: 1.125rem;
+    }
+}
