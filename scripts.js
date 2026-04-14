@@ -1,6 +1,206 @@
 const STORAGE_KEY = "sorteo-simple-state";
+const LANGUAGE_STORAGE_KEY = "sorteo-simple-language";
 const TOAST_DURATION_MS = 2800;
 const DRAW_ANIMATION_MS = 620;
+
+const I18N = {
+    es: {
+        pageDescription: "Herramienta moderna para sortear ganadores de forma aleatoria, sin repetir nombres.",
+        heroEyebrow: "Sorteos sin vueltas",
+        heroCopy: "Cargá participantes, definí premios y obtené ganadores al instante con una herramienta simple y clara.",
+        formHeading: "Configurar sorteo",
+        formSubheading: "Prepará la lista, ajustá opciones y dejá todo listo para sortear.",
+        prizeLabel: "Cantidad de premios",
+        prizeHelp: "Permitido: entre 1 y 100 premios.",
+        participantsLabel: "Participantes",
+        participantsPlaceholder: "Escribí un participante por línea",
+        participantsHelp: "Las líneas vacías se ignoran. Podés limpiar nombres repetidos en un clic.",
+        removeDuplicatesButton: "Quitar repetidos",
+        advancedOptionsSummary: "Opciones avanzadas",
+        excludePreviousLabel: "Excluir ganadores previos al volver a sortear",
+        autoRemoveDuplicatesLabel: "Quitar repetidos automáticamente al sortear",
+        drawButton: "Sortear ahora",
+        rerollButton: "Sortear de nuevo",
+        resetButton: "Limpiar todo",
+        resultHeading: "Resultado",
+        resultSubheading: "Visualizá los ganadores, copiá el texto o exportalo para compartirlo.",
+        summaryPrizesLabel: "Premios",
+        summaryParticipantsLabel: "Participantes válidos",
+        summaryDuplicatesLabel: "repetidos",
+        winnersLabel: "Ganadores",
+        noResult: "Sin sorteo",
+        latestResultReady: "Último sorteo listo",
+        emptyStateTitle: "Todo listo para empezar",
+        emptyStateText: "Cuando ejecutes el sorteo, vas a ver aquí los ganadores numerados y vas a poder copiarlos o exportarlos.",
+        resultPlaceholder: "Todavía no hay un sorteo realizado",
+        resultHelp: "El resultado se genera automáticamente y queda bloqueado para evitar cambios manuales.",
+        historyLabel: "Ganadores acumulados excluidos",
+        historyEmpty: "Todavía no se excluyeron ganadores previos.",
+        copyButton: "Copiar resultado",
+        exportButton: "Exportar TXT",
+        clearHistoryButton: "Borrar historial",
+        footerText: "Creado por E.G.",
+        confirmTitle: "Confirmar acción",
+        confirmCancelButton: "Cancelar",
+        confirmAcceptButton: "Continuar",
+        participantSingle: "participante",
+        participantPlural: "participantes",
+        duplicatesMetric: "repetidos",
+        availableMetric: "disponibles",
+        invalidPrizeCount: "La cantidad de premios es inválida.",
+        validation_no_participants: "Ingresá al menos un participante para realizar el sorteo.",
+        validation_invalid_prize_count: "La cantidad de premios debe estar entre 1 y 100.",
+        validation_no_eligible_participants: "No quedan participantes disponibles con las opciones actuales.",
+        validation_too_many_prizes: "La cantidad de premios no puede superar a los participantes disponibles.",
+        raffleDone: "Sorteo realizado con éxito.",
+        rerollNeedParticipants: "Primero cargá participantes para poder volver a sortear.",
+        rerollDone: "Nuevo sorteo generado.",
+        noResultToCopy: "Todavía no hay resultado para copiar.",
+        copiedResult: "Resultado copiado al portapapeles.",
+        copyFailed: "No se pudo copiar el resultado.",
+        noResultToExport: "Todavía no hay resultado para exportar.",
+        exportedResult: "Resultado exportado en TXT.",
+        noDuplicatesToClean: "No hay participantes repetidos para limpiar.",
+        duplicatesRemoved: "Se eliminaron los participantes repetidos.",
+        clearHistoryConfirm: "Se va a borrar el historial de ganadores excluidos. Después vas a poder volver a usar esos nombres en próximos sorteos.",
+        clearHistoryDone: "Se borró el historial de ganadores excluidos.",
+        resetConfirm: "Se van a limpiar participantes, resultado y opciones activas. Esta acción no se puede deshacer.",
+        resetDone: "Formulario reiniciado.",
+        confirmCancel: false,
+        winnerSingle: "Ganador",
+        prizePrefix: "Premio",
+    },
+    en: {
+        pageDescription: "Modern tool to draw winners at random without repeating names.",
+        heroEyebrow: "Quick raffles",
+        heroCopy: "Add participants, set prizes, and get winners instantly with a simple and clear tool.",
+        formHeading: "Setup raffle",
+        formSubheading: "Prepare the list, adjust options, and get everything ready to draw.",
+        prizeLabel: "Number of prizes",
+        prizeHelp: "Allowed range: from 1 to 100 prizes.",
+        participantsLabel: "Participants",
+        participantsPlaceholder: "Write one participant per line",
+        participantsHelp: "Empty lines are ignored. You can clean repeated names in one click.",
+        removeDuplicatesButton: "Remove duplicates",
+        advancedOptionsSummary: "Advanced options",
+        excludePreviousLabel: "Exclude previous winners when drawing again",
+        autoRemoveDuplicatesLabel: "Remove duplicates automatically when drawing",
+        drawButton: "Draw now",
+        rerollButton: "Draw again",
+        resetButton: "Clear all",
+        resultHeading: "Result",
+        resultSubheading: "View the winners, copy the text, or export it to share.",
+        summaryPrizesLabel: "Prizes",
+        summaryParticipantsLabel: "Eligible participants",
+        summaryDuplicatesLabel: "duplicates",
+        winnersLabel: "Winners",
+        noResult: "No draw yet",
+        latestResultReady: "Latest draw ready",
+        emptyStateTitle: "Everything is ready",
+        emptyStateText: "When you run the draw, you will see the numbered winners here and you will be able to copy or export them.",
+        resultPlaceholder: "There is no draw yet",
+        resultHelp: "The result is generated automatically and stays locked to avoid manual changes.",
+        historyLabel: "Excluded winners history",
+        historyEmpty: "No previous winners have been excluded yet.",
+        copyButton: "Copy result",
+        exportButton: "Export TXT",
+        clearHistoryButton: "Clear history",
+        footerText: "Created by E.G.",
+        confirmTitle: "Confirm action",
+        confirmCancelButton: "Cancel",
+        confirmAcceptButton: "Continue",
+        participantSingle: "participant",
+        participantPlural: "participants",
+        duplicatesMetric: "duplicates",
+        availableMetric: "available",
+        invalidPrizeCount: "The prize count is invalid.",
+        validation_no_participants: "Enter at least one participant to run the draw.",
+        validation_invalid_prize_count: "The prize count must be between 1 and 100.",
+        validation_no_eligible_participants: "There are no participants available with the current options.",
+        validation_too_many_prizes: "The prize count cannot be greater than the available participants.",
+        raffleDone: "Draw completed successfully.",
+        rerollNeedParticipants: "Add participants first so you can draw again.",
+        rerollDone: "New draw generated.",
+        noResultToCopy: "There is no result to copy yet.",
+        copiedResult: "Result copied to the clipboard.",
+        copyFailed: "The result could not be copied.",
+        noResultToExport: "There is no result to export yet.",
+        exportedResult: "Result exported as TXT.",
+        noDuplicatesToClean: "There are no duplicated participants to clean.",
+        duplicatesRemoved: "Duplicated participants were removed.",
+        clearHistoryConfirm: "This will clear the excluded winners history. Those names will be available again in future draws.",
+        clearHistoryDone: "Excluded winners history was cleared.",
+        resetConfirm: "This will clear participants, result, and active options. This action cannot be undone.",
+        resetDone: "Form reset.",
+        winnerSingle: "Winner",
+        prizePrefix: "Prize",
+    },
+    pt: {
+        pageDescription: "Ferramenta moderna para sortear vencedores aleatoriamente sem repetir nomes.",
+        heroEyebrow: "Sorteios sem enrolação",
+        heroCopy: "Adicione participantes, defina prêmios e obtenha vencedores na hora com uma ferramenta simples e clara.",
+        formHeading: "Configurar sorteio",
+        formSubheading: "Prepare a lista, ajuste as opções e deixe tudo pronto para sortear.",
+        prizeLabel: "Quantidade de prêmios",
+        prizeHelp: "Permitido: entre 1 e 100 prêmios.",
+        participantsLabel: "Participantes",
+        participantsPlaceholder: "Escreva um participante por linha",
+        participantsHelp: "Linhas vazias são ignoradas. Você pode remover nomes repetidos com um clique.",
+        removeDuplicatesButton: "Remover repetidos",
+        advancedOptionsSummary: "Opções avançadas",
+        excludePreviousLabel: "Excluir vencedores anteriores ao sortear novamente",
+        autoRemoveDuplicatesLabel: "Remover repetidos automaticamente ao sortear",
+        drawButton: "Sortear agora",
+        rerollButton: "Sortear novamente",
+        resetButton: "Limpar tudo",
+        resultHeading: "Resultado",
+        resultSubheading: "Veja os vencedores, copie o texto ou exporte para compartilhar.",
+        summaryPrizesLabel: "Prêmios",
+        summaryParticipantsLabel: "Participantes válidos",
+        summaryDuplicatesLabel: "repetidos",
+        winnersLabel: "Vencedores",
+        noResult: "Sem sorteio",
+        latestResultReady: "Último sorteio pronto",
+        emptyStateTitle: "Tudo pronto para começar",
+        emptyStateText: "Quando você executar o sorteio, os vencedores numerados aparecerão aqui e você poderá copiá-los ou exportá-los.",
+        resultPlaceholder: "Ainda não há um sorteio realizado",
+        resultHelp: "O resultado é gerado automaticamente e fica bloqueado para evitar alterações manuais.",
+        historyLabel: "Histórico de vencedores excluídos",
+        historyEmpty: "Ainda não há vencedores anteriores excluídos.",
+        copyButton: "Copiar resultado",
+        exportButton: "Exportar TXT",
+        clearHistoryButton: "Limpar histórico",
+        footerText: "Criado por E.G.",
+        confirmTitle: "Confirmar ação",
+        confirmCancelButton: "Cancelar",
+        confirmAcceptButton: "Continuar",
+        participantSingle: "participante",
+        participantPlural: "participantes",
+        duplicatesMetric: "repetidos",
+        availableMetric: "disponíveis",
+        invalidPrizeCount: "A quantidade de prêmios é inválida.",
+        validation_no_participants: "Adicione pelo menos um participante para realizar o sorteio.",
+        validation_invalid_prize_count: "A quantidade de prêmios deve estar entre 1 e 100.",
+        validation_no_eligible_participants: "Não há participantes disponíveis com as opções atuais.",
+        validation_too_many_prizes: "A quantidade de prêmios não pode superar os participantes disponíveis.",
+        raffleDone: "Sorteio realizado com sucesso.",
+        rerollNeedParticipants: "Adicione participantes primeiro para poder sortear novamente.",
+        rerollDone: "Novo sorteio gerado.",
+        noResultToCopy: "Ainda não há resultado para copiar.",
+        copiedResult: "Resultado copiado para a área de transferência.",
+        copyFailed: "Não foi possível copiar o resultado.",
+        noResultToExport: "Ainda não há resultado para exportar.",
+        exportedResult: "Resultado exportado em TXT.",
+        noDuplicatesToClean: "Não há participantes repetidos para limpar.",
+        duplicatesRemoved: "Os participantes repetidos foram removidos.",
+        clearHistoryConfirm: "Isso vai limpar o histórico de vencedores excluídos. Esses nomes poderão ser usados novamente nos próximos sorteios.",
+        clearHistoryDone: "O histórico de vencedores excluídos foi limpo.",
+        resetConfirm: "Isso vai limpar participantes, resultado e opções ativas. Esta ação não pode ser desfeita.",
+        resetDone: "Formulário reiniciado.",
+        winnerSingle: "Vencedor",
+        prizePrefix: "Prêmio",
+    },
+};
 
 const {
     MIN_PRIZES,
@@ -11,7 +211,6 @@ const {
     buildEligibleParticipants,
     validateRaffle,
     pickWinners,
-    formatWinners,
 } = window.RaffleCore;
 
 const raffleForm = document.getElementById("raffleForm");
@@ -43,15 +242,60 @@ const confirmDialog = document.getElementById("confirmDialog");
 const confirmMessage = document.getElementById("confirmMessage");
 const confirmCancelButton = document.getElementById("confirmCancelButton");
 const confirmAcceptButton = document.getElementById("confirmAcceptButton");
+const descriptionMeta = document.querySelector('meta[name="description"]');
+const langButtons = document.querySelectorAll("[data-lang]");
+const heroEyebrow = document.getElementById("heroEyebrow");
+const heroCopy = document.getElementById("heroCopy");
+const formHeading = document.getElementById("formHeading");
+const formSubheading = document.getElementById("formSubheading");
+const prizeLabel = document.getElementById("prizeLabel");
+const prizeHelp = document.getElementById("prizeHelp");
+const participantsLabel = document.getElementById("participantsLabel");
+const participantsHelp = document.getElementById("participantsHelp");
+const advancedOptionsSummary = document.getElementById("advancedOptionsSummary");
+const excludePreviousLabel = document.getElementById("excludePreviousLabel");
+const autoRemoveDuplicatesLabel = document.getElementById("autoRemoveDuplicatesLabel");
+const drawButton = document.getElementById("drawButton");
+const rerollButtonLabel = document.getElementById("rerollButton");
+const resetButtonLabel = document.getElementById("resetButton");
+const resultHeading = document.getElementById("resultHeading");
+const resultSubheading = document.getElementById("resultSubheading");
+const summaryPrizesLabel = document.getElementById("summaryPrizesLabel");
+const summaryParticipantsLabel = document.getElementById("summaryParticipantsLabel");
+const summaryDuplicatesLabel = document.getElementById("summaryDuplicatesLabel");
+const winnersLabel = document.getElementById("winnersLabel");
+const emptyStateTitle = document.getElementById("emptyStateTitle");
+const emptyStateText = document.getElementById("emptyStateText");
+const resultHelp = document.getElementById("resultHelp");
+const historyLabel = document.getElementById("historyLabel");
+const footerText = document.getElementById("footerText");
+const confirmTitle = document.getElementById("confirmTitle");
 
 let toastTimeoutId;
 let drawAnimationTimeoutId;
 let pendingConfirmationResolve;
 
 const state = {
+    language: "es",
     previousWinners: [],
     lastUsedParticipants: [],
 };
+
+function t(key) {
+    return I18N[state.language][key] ?? I18N.es[key] ?? key;
+}
+
+function loadLanguage() {
+    const savedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+
+    if (savedLanguage && I18N[savedLanguage]) {
+        state.language = savedLanguage;
+    }
+}
+
+function persistLanguage() {
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, state.language);
+}
 
 function loadState() {
     try {
@@ -72,6 +316,50 @@ function loadState() {
     } catch (error) {
         console.error(error);
     }
+}
+
+function applyTranslations() {
+    document.documentElement.lang = state.language;
+    document.title = "Sorteo Simple";
+    descriptionMeta.setAttribute("content", t("pageDescription"));
+    heroEyebrow.textContent = t("heroEyebrow");
+    heroCopy.textContent = t("heroCopy");
+    formHeading.textContent = t("formHeading");
+    formSubheading.textContent = t("formSubheading");
+    prizeLabel.textContent = t("prizeLabel");
+    prizeHelp.textContent = t("prizeHelp");
+    participantsLabel.textContent = t("participantsLabel");
+    participantsInput.placeholder = t("participantsPlaceholder");
+    participantsHelp.textContent = t("participantsHelp");
+    removeDuplicatesButton.textContent = t("removeDuplicatesButton");
+    advancedOptionsSummary.textContent = t("advancedOptionsSummary");
+    excludePreviousLabel.textContent = t("excludePreviousLabel");
+    autoRemoveDuplicatesLabel.textContent = t("autoRemoveDuplicatesLabel");
+    drawButton.textContent = t("drawButton");
+    rerollButtonLabel.textContent = t("rerollButton");
+    resetButtonLabel.textContent = t("resetButton");
+    resultHeading.textContent = t("resultHeading");
+    resultSubheading.textContent = t("resultSubheading");
+    summaryPrizesLabel.textContent = t("summaryPrizesLabel");
+    summaryParticipantsLabel.textContent = t("summaryParticipantsLabel");
+    summaryDuplicatesLabel.textContent = t("summaryDuplicatesLabel");
+    winnersLabel.textContent = t("winnersLabel");
+    emptyStateTitle.textContent = t("emptyStateTitle");
+    emptyStateText.textContent = t("emptyStateText");
+    resultOutput.placeholder = t("resultPlaceholder");
+    resultHelp.textContent = t("resultHelp");
+    historyLabel.textContent = t("historyLabel");
+    copyButton.textContent = t("copyButton");
+    exportButton.textContent = t("exportButton");
+    clearHistoryButton.textContent = t("clearHistoryButton");
+    footerText.textContent = t("footerText");
+    confirmTitle.textContent = t("confirmTitle");
+    confirmCancelButton.textContent = t("confirmCancelButton");
+    confirmAcceptButton.textContent = t("confirmAcceptButton");
+
+    langButtons.forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.lang === state.language);
+    });
 }
 
 function persistState() {
@@ -118,6 +406,14 @@ function closeConfirmation(confirmed) {
     }
 }
 
+function translateValidationMessage(validation) {
+    if (!validation || validation.valid || !validation.code) {
+        return "";
+    }
+
+    return t(`validation_${validation.code}`) || validation.message;
+}
+
 function getCurrentParticipants() {
     return parseParticipants(participantsInput.value);
 }
@@ -151,11 +447,11 @@ function renderMetrics(overview) {
 
     if (overview.duplicates.length > 0) {
         const duplicateCount = overview.duplicates.reduce((total, duplicate) => total + duplicate.count - 1, 0);
-        chips.push(`<span class="meta-chip warning">${duplicateCount} repetidos</span>`);
+        chips.push(`<span class="meta-chip warning">${duplicateCount} ${t("duplicatesMetric")}</span>`);
     }
 
     if (excludePreviousWinnersInput.checked && state.previousWinners.length > 0) {
-        chips.push(`<span class="meta-chip">${overview.eligibleParticipants.length} disponibles</span>`);
+        chips.push(`<span class="meta-chip">${overview.eligibleParticipants.length} ${t("availableMetric")}</span>`);
     }
 
     participantsMetrics.innerHTML = chips.join("");
@@ -165,7 +461,7 @@ function updateSummary() {
     const prizes = sanitizePrizeCount(prizesInput.value);
     const overview = getParticipantsOverview();
     const total = overview.participants.length;
-    const label = total === 1 ? "participante" : "participantes";
+    const label = total === 1 ? t("participantSingle") : t("participantPlural");
     const duplicateEntriesCount = overview.duplicates.reduce((totalDuplicates, duplicate) => {
         return totalDuplicates + duplicate.count - 1;
     }, 0);
@@ -176,7 +472,7 @@ function updateSummary() {
     summaryDuplicateParticipants.textContent = String(duplicateEntriesCount);
     historyText.textContent = state.previousWinners.length
         ? state.previousWinners.join(", ")
-        : "Todavía no se excluyeron ganadores previos.";
+        : t("historyEmpty");
     removeDuplicatesButton.disabled = overview.duplicates.length === 0;
     rerollButton.disabled = overview.uniqueParticipants.length === 0;
     exportButton.disabled = !resultOutput.value.trim();
@@ -189,7 +485,7 @@ function updateSummary() {
 
 function renderResultState(hasResult) {
     emptyState.classList.toggle("empty-state-hidden", hasResult);
-    resultBadge.textContent = hasResult ? "Ultimo sorteo listo" : "Sin sorteo";
+    resultBadge.textContent = hasResult ? t("latestResultReady") : t("noResult");
     resultBadge.className = `counter ${hasResult ? "counter-success" : "counter-neutral"}`;
 }
 
@@ -204,6 +500,12 @@ function extractWinnersFromResultText(resultText) {
         });
 }
 
+function formatLocalizedWinners(winners) {
+    return winners
+        .map((winner, index) => `${t("prizePrefix")} ${index + 1}: ${winner}`)
+        .join("\n");
+}
+
 function renderWinnerReveal(winners) {
     if (!winners.length) {
         winnerReveal.innerHTML = "";
@@ -213,7 +515,7 @@ function renderWinnerReveal(winners) {
 
     winnerReveal.classList.add("has-winners");
     winnerReveal.innerHTML = winners.map((winner, index) => {
-        const label = winners.length === 1 ? "Ganador" : `Premio ${index + 1}`;
+        const label = winners.length === 1 ? t("winnerSingle") : `${t("prizePrefix")} ${index + 1}`;
         const singleClass = winners.length === 1 ? " single" : "";
         const delay = `${index * 90}ms`;
 
@@ -236,11 +538,11 @@ function validateFormForUI() {
         excludePreviousWinners: excludePreviousWinnersInput.checked,
     });
 
-    setFieldError(prizeError, prizesInput, prizes >= MIN_PRIZES ? "" : "La cantidad de premios es inválida.");
+    setFieldError(prizeError, prizesInput, prizes >= MIN_PRIZES ? "" : t("invalidPrizeCount"));
     setFieldError(
         participantsError,
         participantsInput,
-        validation.valid ? "" : validation.message,
+        validation.valid ? "" : translateValidationMessage(validation),
     );
 
     return validation;
@@ -272,6 +574,24 @@ function syncPanelTopHeights() {
     });
 }
 
+function setLanguage(language) {
+    if (!I18N[language]) {
+        return;
+    }
+
+    state.language = language;
+    persistLanguage();
+    applyTranslations();
+    if (resultOutput.value.trim()) {
+        resultOutput.value = formatLocalizedWinners(extractWinnersFromResultText(resultOutput.value));
+    }
+    validateFormForUI();
+    updateSummary();
+    renderResultState(Boolean(resultOutput.value.trim()));
+    renderWinnerReveal(extractWinnersFromResultText(resultOutput.value));
+    syncPanelTopHeights();
+}
+
 function performRaffle(options) {
     const prizes = sanitizePrizeCount(prizesInput.value);
     const overview = getParticipantsOverview();
@@ -293,13 +613,13 @@ function performRaffle(options) {
         resultOutput.value = "";
         renderWinnerReveal([]);
         renderResultState(false);
-        showToast(validation.message, "error");
+        showToast(translateValidationMessage(validation), "error");
         return false;
     }
 
     const excludedParticipants = excludePreviousWinnersInput.checked ? state.previousWinners : [];
     const winners = pickWinners(sourceParticipants, prizes, excludedParticipants);
-    resultOutput.value = formatWinners(winners);
+    resultOutput.value = formatLocalizedWinners(winners);
     renderWinnerReveal(winners);
     state.lastUsedParticipants = [...sourceParticipants];
 
@@ -329,7 +649,7 @@ function handleSubmit(event) {
     event.preventDefault();
     performRaffle({
         useCurrentText: true,
-        toastMessage: "Sorteo realizado con éxito.",
+        toastMessage: t("raffleDone"),
     });
 }
 
@@ -337,7 +657,7 @@ function handleReroll() {
     const overview = getParticipantsOverview();
 
     if (overview.uniqueParticipants.length === 0) {
-        showToast("Primero cargá participantes para poder volver a sortear.", "warning");
+        showToast(t("rerollNeedParticipants"), "warning");
         return;
     }
 
@@ -347,28 +667,28 @@ function handleReroll() {
 
     performRaffle({
         useCurrentText: false,
-        toastMessage: "Nuevo sorteo generado.",
+        toastMessage: t("rerollDone"),
     });
 }
 
 async function handleCopy() {
     if (!resultOutput.value.trim()) {
-        showToast("Todavía no hay resultado para copiar.", "warning");
+        showToast(t("noResultToCopy"), "warning");
         return;
     }
 
     try {
         await navigator.clipboard.writeText(resultOutput.value);
-        showToast("Resultado copiado al portapapeles.", "success");
+        showToast(t("copiedResult"), "success");
     } catch (error) {
         console.error(error);
-        showToast("No se pudo copiar el resultado.", "error");
+        showToast(t("copyFailed"), "error");
     }
 }
 
 function handleExport() {
     if (!resultOutput.value.trim()) {
-        showToast("Todavía no hay resultado para exportar.", "warning");
+        showToast(t("noResultToExport"), "warning");
         return;
     }
 
@@ -383,7 +703,7 @@ function handleExport() {
     link.remove();
     URL.revokeObjectURL(url);
 
-    showToast("Resultado exportado en TXT.", "success");
+    showToast(t("exportedResult"), "success");
 }
 
 function handleRemoveDuplicates() {
@@ -391,18 +711,18 @@ function handleRemoveDuplicates() {
     const uniqueParticipants = dedupeParticipants(participants);
 
     if (participants.length === uniqueParticipants.length) {
-        showToast("No hay participantes repetidos para limpiar.", "warning");
+        showToast(t("noDuplicatesToClean"), "warning");
         return;
     }
 
     participantsInput.value = uniqueParticipants.join("\n");
     validateFormForUI();
     updateSummary();
-    showToast("Se eliminaron los participantes repetidos.", "success");
+    showToast(t("duplicatesRemoved"), "success");
 }
 
 async function handleClearHistory() {
-    const confirmed = await requestConfirmation("Se va a borrar el historial de ganadores excluidos. Después vas a poder volver a usar esos nombres en próximos sorteos.");
+    const confirmed = await requestConfirmation(t("clearHistoryConfirm"));
 
     if (!confirmed) {
         return;
@@ -411,7 +731,7 @@ async function handleClearHistory() {
     state.previousWinners = [];
     validateFormForUI();
     updateSummary();
-    showToast("Se borró el historial de ganadores excluidos.", "success");
+    showToast(t("clearHistoryDone"), "success");
 }
 
 async function handleReset(event) {
@@ -433,7 +753,7 @@ async function handleReset(event) {
         return;
     }
 
-    const confirmed = await requestConfirmation("Se van a limpiar participantes, resultado y opciones activas. Esta acción no se puede deshacer.");
+    const confirmed = await requestConfirmation(t("resetConfirm"));
 
     if (!confirmed) {
         return;
@@ -453,11 +773,13 @@ async function handleReset(event) {
         setFieldError(participantsError, participantsInput, "");
         renderResultState(false);
         updateSummary();
-        showToast("Formulario reiniciado.", "success");
+        showToast(t("resetDone"), "success");
     });
 }
 
+loadLanguage();
 loadState();
+applyTranslations();
 raffleForm.addEventListener("submit", handleSubmit);
 prizesInput.addEventListener("input", handlePrizeInput);
 participantsInput.addEventListener("input", handleParticipantsInput);
@@ -475,6 +797,11 @@ resetButton.addEventListener("click", handleReset);
 rerollButton.addEventListener("click", handleReroll);
 clearHistoryButton.addEventListener("click", handleClearHistory);
 removeDuplicatesButton.addEventListener("click", handleRemoveDuplicates);
+langButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        setLanguage(button.dataset.lang);
+    });
+});
 confirmCancelButton.addEventListener("click", () => closeConfirmation(false));
 confirmAcceptButton.addEventListener("click", () => closeConfirmation(true));
 confirmDialog.addEventListener("click", (event) => {

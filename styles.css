@@ -84,6 +84,49 @@ body::after {
     padding: 18px 6px 4px;
 }
 
+.hero-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.language-switcher {
+    display: inline-flex;
+    gap: 6px;
+    padding: 6px;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: var(--shadow-md);
+}
+
+.lang-button {
+    appearance: none;
+    border: 0;
+    border-radius: 999px;
+    min-width: 44px;
+    min-height: 34px;
+    padding: 0 12px;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    color: var(--text-muted);
+    background: transparent;
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.lang-button:hover {
+    transform: translateY(-1px);
+}
+
+.lang-button.is-active {
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+}
+
 .hero-title {
     display: flex;
     align-items: center;
@@ -736,6 +779,11 @@ input[type="number"]:focus,
 
     .hero {
         padding-inline: 2px;
+    }
+
+    .hero-topbar {
+        align-items: flex-start;
+        flex-direction: column;
     }
 
     .hero-title {

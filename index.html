@@ -20,12 +20,19 @@
     <div class="page-shell">
         <main class="app">
             <section class="hero">
-                <p class="eyebrow">Sorteos sin vueltas</p>
+                <div class="hero-topbar">
+                    <p id="heroEyebrow" class="eyebrow">Sorteos sin vueltas</p>
+                    <div class="language-switcher" aria-label="Language selector">
+                        <button type="button" class="lang-button is-active" data-lang="es">ES</button>
+                        <button type="button" class="lang-button" data-lang="en">EN</button>
+                        <button type="button" class="lang-button" data-lang="pt">PT</button>
+                    </div>
+                </div>
                 <div class="hero-title">
                     <img src="favicon.svg" alt="" class="hero-mark">
                     <h1>Sorteo Simple</h1>
                 </div>
-                <p class="hero-copy">
+                <p id="heroCopy" class="hero-copy">
                     Cargá participantes, definí premios y obtené ganadores al instante con una herramienta simple y clara.
                 </p>
             </section>
@@ -33,14 +40,14 @@
             <section class="workspace" aria-label="Herramienta de sorteo">
                 <article class="panel panel-form">
                     <div class="panel-heading">
-                        <h2>Configurar sorteo</h2>
-                        <p>Prepará la lista, ajustá opciones y dejá todo listo para sortear.</p>
+                        <h2 id="formHeading">Configurar sorteo</h2>
+                        <p id="formSubheading">Prepará la lista, ajustá opciones y dejá todo listo para sortear.</p>
                     </div>
 
                     <form id="raffleForm" novalidate>
                         <div class="panel-top">
                             <div class="field-group compact">
-                                <label for="cantPremios">Cantidad de premios</label>
+                                <label id="prizeLabel" for="cantPremios">Cantidad de premios</label>
                                 <input type="number" id="cantPremios" name="cantPremios" value="1" min="1" max="100"
                                     inputmode="numeric" autocomplete="off" aria-describedby="prizeHelp prizeError"
                                     required>
@@ -51,7 +58,7 @@
 
                         <div class="field-group field-group-fill">
                             <div class="field-header">
-                                <label for="formControlTextArea1">Participantes</label>
+                                <label id="participantsLabel" for="formControlTextArea1">Participantes</label>
                                 <span id="participantsCounter" class="counter">0 participantes</span>
                             </div>
                             <textarea class="form-textarea" id="formControlTextArea1" name="participantes" rows="12"
@@ -68,15 +75,15 @@
                         </div>
 
                         <details class="options-card">
-                            <summary>Opciones avanzadas</summary>
+                            <summary id="advancedOptionsSummary">Opciones avanzadas</summary>
                             <div class="options-content">
                                 <label class="toggle">
                                     <input type="checkbox" id="excludePreviousWinners">
-                                    <span>Excluir ganadores previos al volver a sortear</span>
+                                    <span id="excludePreviousLabel">Excluir ganadores previos al volver a sortear</span>
                                 </label>
                                 <label class="toggle">
                                     <input type="checkbox" id="autoRemoveDuplicates">
-                                    <span>Quitar repetidos automáticamente al sortear</span>
+                                    <span id="autoRemoveDuplicatesLabel">Quitar repetidos automáticamente al sortear</span>
                                 </label>
                             </div>
                         </details>
@@ -91,39 +98,39 @@
 
                 <article class="panel panel-result">
                     <div class="panel-heading">
-                        <h2>Resultado</h2>
-                        <p>Visualizá los ganadores, copiá el texto o exportalo para compartirlo.</p>
+                        <h2 id="resultHeading">Resultado</h2>
+                        <p id="resultSubheading">Visualizá los ganadores, copiá el texto o exportalo para compartirlo.</p>
                     </div>
 
                     <div class="panel-top">
                         <div class="result-top">
                             <div class="result-summary" aria-live="polite">
                                 <div>
-                                    <span class="summary-label">Premios</span>
+                                    <span id="summaryPrizesLabel" class="summary-label">Premios</span>
                                     <strong id="summaryPrizes">1</strong>
                                 </div>
                                 <div>
-                                    <span class="summary-label">Participantes válidos</span>
+                                    <span id="summaryParticipantsLabel" class="summary-label">Participantes válidos</span>
                                     <strong id="summaryParticipants">0</strong>
                                 </div>
                             </div>
 
                             <p class="result-meta" aria-live="polite">
-                                <span><strong id="summaryDuplicateParticipants">0</strong> repetidos</span>
+                                <span><strong id="summaryDuplicateParticipants">0</strong> <span id="summaryDuplicatesLabel">repetidos</span></span>
                             </p>
                         </div>
                     </div>
 
                     <div class="field-group field-group-fill">
                         <div class="field-header">
-                            <label for="formControlTextArea2">Ganadores</label>
+                            <label id="winnersLabel" for="formControlTextArea2">Ganadores</label>
                             <span id="resultBadge" class="counter counter-neutral">Sin sorteo</span>
                         </div>
                         <div id="winnerReveal" class="winner-reveal" aria-live="polite"></div>
                         <div id="resultStage" class="result-stage">
                             <div id="emptyState" class="empty-state">
-                                <strong>Todo listo para empezar</strong>
-                                <p>Cuando ejecutes el sorteo, vas a ver aquí los ganadores numerados y vas a poder copiarlos o exportarlos.</p>
+                                <strong id="emptyStateTitle">Todo listo para empezar</strong>
+                                <p id="emptyStateText">Cuando ejecutes el sorteo, vas a ver aquí los ganadores numerados y vas a poder copiarlos o exportarlos.</p>
                             </div>
                             <textarea class="form-textarea result-area" id="formControlTextArea2" name="resultado"
                                 rows="12" placeholder="Todavía no hay un sorteo realizado" readonly
@@ -133,7 +140,7 @@
                     </div>
 
                     <div class="history-card" aria-live="polite">
-                        <span class="summary-label">Ganadores acumulados excluidos</span>
+                        <span id="historyLabel" class="summary-label">Ganadores acumulados excluidos</span>
                         <p id="historyText">Todavía no se excluyeron ganadores previos.</p>
                     </div>
 
@@ -147,7 +154,7 @@
         </main>
 
         <footer class="site-footer">
-            <p>Creado por E.G.</p>
+            <p id="footerText">Creado por E.G.</p>
             <div class="footer-links">
                 <a href="https://www.linkedin.com/in/emanuel-guzzetti/" target="_blank" rel="noopener noreferrer"
                     aria-label="Perfil de LinkedIn">

@@ -56,11 +56,11 @@
         const uniqueParticipants = dedupeParticipants(participants);
 
         if (participants.length === 0) {
-            return { valid: false, message: "Ingresa al menos un participante para realizar el sorteo." };
+            return { valid: false, code: "no_participants", message: "Ingresa al menos un participante para realizar el sorteo." };
         }
 
         if (prizeCount < MIN_PRIZES || prizeCount > MAX_PRIZES) {
-            return { valid: false, message: "La cantidad de premios debe estar entre 1 y 100." };
+            return { valid: false, code: "invalid_prize_count", message: "La cantidad de premios debe estar entre 1 y 100." };
         }
 
         const eligibleParticipants = buildEligibleParticipants(
@@ -70,17 +70,18 @@
         );
 
         if (eligibleParticipants.length === 0) {
-            return { valid: false, message: "No quedan participantes disponibles con las opciones actuales." };
+            return { valid: false, code: "no_eligible_participants", message: "No quedan participantes disponibles con las opciones actuales." };
         }
 
         if (prizeCount > eligibleParticipants.length) {
             return {
                 valid: false,
+                code: "too_many_prizes",
                 message: "La cantidad de premios no puede superar a los participantes disponibles.",
             };
         }
 
-        return { valid: true, message: "" };
+        return { valid: true, code: "", message: "" };
     }
 
     function pickWinners(participants, prizeCount, excludedParticipants) {
