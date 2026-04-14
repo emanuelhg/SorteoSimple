@@ -13,6 +13,8 @@ Sorteo Simple es una aplicación web estática para elegir ganadores de forma al
 - Permite volver a sortear manteniendo la misma base de participantes.
 - Puede excluir ganadores previos para rondas sucesivas.
 - Guarda el estado en `localStorage`.
+- Guarda el idioma seleccionado en `localStorage`.
+- Permite alternar la interfaz entre español, inglés y portugués.
 - Copia el resultado al portapapeles.
 - Exporta el resultado a un archivo `.txt`.
 - Muestra una revelación animada de ganadores.
@@ -23,7 +25,7 @@ Sorteo Simple es una aplicación web estática para elegir ganadores de forma al
 - `index.html`: interfaz principal.
 - `styles.css`: sistema visual responsive.
 - `raffle-core.js`: lógica pura del sorteo y validaciones reutilizables.
-- `scripts.js`: integración con DOM, persistencia y acciones de la UI.
+- `scripts.js`: integración con DOM, persistencia, traducciones y acciones de la UI.
 - `favicon.svg`: marca visual y favicon del sitio.
 - `site.webmanifest`: metadatos básicos de identidad del sitio.
 - `tests/raffle-core.test.js`: pruebas básicas del módulo puro.
@@ -32,9 +34,10 @@ Sorteo Simple es una aplicación web estática para elegir ganadores de forma al
 ## Cómo usarlo
 
 1. Abre `index.html` en tu navegador.
-2. Escribe participantes, uno por línea.
-3. Ajusta la cantidad de premios y, si quieres, las opciones avanzadas.
-4. Ejecuta el sorteo, vuelve a sortear, copia o exporta el resultado.
+2. Elige el idioma desde el selector `ES / EN / PT`.
+3. Escribe participantes, uno por línea.
+4. Ajusta la cantidad de premios y, si quieres, las opciones avanzadas.
+5. Ejecuta el sorteo, vuelve a sortear, copia o exporta el resultado.
 
 ## Verificación rápida
 
@@ -50,3 +53,4 @@ Sorteo Simple es una aplicación web estática para elegir ganadores de forma al
 - Historial acumulado de ganadores excluidos.
 - Separación entre lógica pura y código de interfaz.
 - Favicon y branding propio.
+- Soporte de interfaz multilenguaje.
