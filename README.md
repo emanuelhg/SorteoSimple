@@ -1,11 +1,52 @@
-## **Sorteo Simple:**
+# Sorteo Simple
 
-**Demo:** [https://emanuelhg.github.io/SorteoSimple/](https://emanuelhg.github.io/SorteoSimple/)
+Demo: [https://emanuelhg.github.io/SorteoSimple/](https://emanuelhg.github.io/SorteoSimple/)
 
-Este sitio es una página web que permite realizar un sorteo de forma simple, donde se puede ingresar la cantidad de premios a sortear y la lista de participantes. El sitio utiliza **HTML**, **CSS** y **JavaScript** para crear la interfaz de usuario y llevar a cabo la lógica de sorteo.
+Sorteo Simple es una aplicación web estática para elegir ganadores de forma aleatoria a partir de una lista de participantes. No necesita backend ni build: todo funciona con HTML, CSS y JavaScript vanilla.
 
-La página se compone de una sección de formulario, que incluye una entrada de texto para la cantidad de premios, una entrada de texto grande para la lista de participantes y dos botones para ejecutar el sorteo y limpiar los datos. También hay una sección de resultado, que muestra los ganadores del sorteo. Además, hay un pie de página que incluye información sobre el creador del sitio y enlaces a sus perfiles de LinkedIn y GitHub.
+## Funciones principales
 
-El sitio utiliza la biblioteca Bootstrap para dar formato a la página y la biblioteca SweetAlert para mostrar alertas de copiado de texto. La lógica de sorteo se realiza en el archivo "scripts.js", donde se definen varias funciones que se encargan de validar los datos ingresados y realizar el sorteo.
+- Define entre 1 y 100 premios.
+- Carga participantes uno por línea.
+- Detecta repetidos y permite limpiarlos en un clic.
+- Puede quitar duplicados automáticamente al sortear.
+- Permite volver a sortear manteniendo la misma base de participantes.
+- Puede excluir ganadores previos para rondas sucesivas.
+- Guarda el estado en `localStorage`.
+- Copia el resultado al portapapeles.
+- Exporta el resultado a un archivo `.txt`.
+- Muestra una revelación animada de ganadores.
+- Usa confirmaciones suaves para acciones sensibles.
 
-En general, el sitio es fácil de usar y ofrece una forma sencilla de realizar un sorteo en línea.
+## Estructura
+
+- `index.html`: interfaz principal.
+- `styles.css`: sistema visual responsive.
+- `raffle-core.js`: lógica pura del sorteo y validaciones reutilizables.
+- `scripts.js`: integración con DOM, persistencia y acciones de la UI.
+- `favicon.svg`: marca visual y favicon del sitio.
+- `site.webmanifest`: metadatos básicos de identidad del sitio.
+- `tests/raffle-core.test.js`: pruebas básicas del módulo puro.
+- `media/`: iconos del footer.
+
+## Cómo usarlo
+
+1. Abre `index.html` en tu navegador.
+2. Escribe participantes, uno por línea.
+3. Ajusta la cantidad de premios y, si quieres, las opciones avanzadas.
+4. Ejecuta el sorteo, vuelve a sortear, copia o exporta el resultado.
+
+## Verificación rápida
+
+- Sintaxis JS: `node --check scripts.js`
+- Tests del módulo puro: `node tests/raffle-core.test.js`
+
+## Mejoras aplicadas
+
+- Rediseño integral de la interfaz.
+- Validaciones inline y feedback con toast.
+- Estado vacío para resultados.
+- Métricas de participantes repetidos y disponibles.
+- Historial acumulado de ganadores excluidos.
+- Separación entre lógica pura y código de interfaz.
+- Favicon y branding propio.

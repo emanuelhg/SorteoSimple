@@ -1,76 +1,179 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+    <meta name="description" content="Herramienta moderna para sortear ganadores de forma aleatoria, sin repetir nombres.">
+    <meta name="theme-color" content="#ef7c41">
     <title>Sorteo Simple</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <h1 class="text-center">Sorteo Simple</h1>
-    <h3 class="text-center lead">- Realiza un sorteo según la cantidad de premios y participantes -</h3>
-    <section class="form-tickets">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12 text-center">
-                    <label for="premios" class="subTextarea">Cant. de premios: </label>
-                    <input type="number" id="cantPremios" name="cantPremios" value="1" min="1" max="100"
-                        onkeyup="refuerzaMinyMaX(this)">
+    <div class="page-shell">
+        <main class="app">
+            <section class="hero">
+                <p class="eyebrow">Sorteos sin vueltas</p>
+                <div class="hero-title">
+                    <img src="favicon.svg" alt="" class="hero-mark">
+                    <h1>Sorteo Simple</h1>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm text-center">
-                    <form>
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1" class="subTextarea">Ingresar participantes (uno
-                                debajo del otro):</label>
-                            <textarea class="form-control" id="formControlTextArea1" rows="12"
-                                style="width: 50%;margin-left: auto;margin-right: auto;"></textarea>
+                <p class="hero-copy">
+                    Cargá participantes, definí premios y obtené ganadores al instante con una herramienta simple y clara.
+                </p>
+            </section>
+
+            <section class="workspace" aria-label="Herramienta de sorteo">
+                <article class="panel panel-form">
+                    <div class="panel-heading">
+                        <h2>Configurar sorteo</h2>
+                        <p>Prepará la lista, ajustá opciones y dejá todo listo para sortear.</p>
+                    </div>
+
+                    <form id="raffleForm" novalidate>
+                        <div class="panel-top">
+                            <div class="field-group compact">
+                                <label for="cantPremios">Cantidad de premios</label>
+                                <input type="number" id="cantPremios" name="cantPremios" value="1" min="1" max="100"
+                                    inputmode="numeric" autocomplete="off" aria-describedby="prizeHelp prizeError"
+                                    required>
+                                <small id="prizeHelp">Permitido: entre 1 y 100 premios.</small>
+                                <p id="prizeError" class="field-error" aria-live="polite"></p>
+                            </div>
                         </div>
-                        <div class="btnEjecutar">
-                            <button type="submit" onClick="ejecutarCaptura(event)"
-                                class="btn btn-success bg-gradient"><i class="bi bi-dice-3"></i> Sortear</button>
-                            <button type="reset" onClick="borrarDatos()" class="btn btn-danger bg-gradient"><i
-                                    class="bi bi-eraser"></i> Limpiar</button>
+
+                        <div class="field-group field-group-fill">
+                            <div class="field-header">
+                                <label for="formControlTextArea1">Participantes</label>
+                                <span id="participantsCounter" class="counter">0 participantes</span>
+                            </div>
+                            <textarea class="form-textarea" id="formControlTextArea1" name="participantes" rows="12"
+                                placeholder="Escribí un participante por línea" spellcheck="false"
+                                aria-describedby="participantsHelp participantsError"></textarea>
+                            <small id="participantsHelp">Las líneas vacías se ignoran. Podés limpiar nombres repetidos en un clic.</small>
+                            <p id="participantsError" class="field-error" aria-live="polite"></p>
+                            <div class="meta-row">
+                                <div id="participantsMetrics" class="meta-chips" aria-live="polite"></div>
+                                <button type="button" id="removeDuplicatesButton" class="btn btn-ghost">
+                                    Quitar repetidos
+                                </button>
+                            </div>
+                        </div>
+
+                        <details class="options-card">
+                            <summary>Opciones avanzadas</summary>
+                            <div class="options-content">
+                                <label class="toggle">
+                                    <input type="checkbox" id="excludePreviousWinners">
+                                    <span>Excluir ganadores previos al volver a sortear</span>
+                                </label>
+                                <label class="toggle">
+                                    <input type="checkbox" id="autoRemoveDuplicates">
+                                    <span>Quitar repetidos automáticamente al sortear</span>
+                                </label>
+                            </div>
+                        </details>
+
+                        <div class="actions">
+                            <button type="submit" id="drawButton" class="btn btn-primary">Sortear ahora</button>
+                            <button type="button" id="rerollButton" class="btn btn-secondary">Sortear de nuevo</button>
+                            <button type="reset" id="resetButton" class="btn btn-secondary">Limpiar todo</button>
                         </div>
                     </form>
-                </div>
-                <div class="col-sm text-center">
-                    <form>
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1" class="subTextarea">Resultado:</label>
-                            <textarea class="form-control" id="formControlTextArea2" rows="12"
-                                style="width: 50%;margin-left: auto;margin-right: auto;"></textarea>
+                </article>
+
+                <article class="panel panel-result">
+                    <div class="panel-heading">
+                        <h2>Resultado</h2>
+                        <p>Visualizá los ganadores, copiá el texto o exportalo para compartirlo.</p>
+                    </div>
+
+                    <div class="panel-top">
+                        <div class="result-top">
+                            <div class="result-summary" aria-live="polite">
+                                <div>
+                                    <span class="summary-label">Premios</span>
+                                    <strong id="summaryPrizes">1</strong>
+                                </div>
+                                <div>
+                                    <span class="summary-label">Participantes válidos</span>
+                                    <strong id="summaryParticipants">0</strong>
+                                </div>
+                            </div>
+
+                            <p class="result-meta" aria-live="polite">
+                                <span><strong id="summaryDuplicateParticipants">0</strong> repetidos</span>
+                            </p>
                         </div>
-                        <div class="btnEjecutar">
-                            <button onclick="copiarDatos(event)" class="btn btn-primary bg-gradient"><i
-                                    class="bi bi-clipboard-check"></i> Copiar</button>
+                    </div>
+
+                    <div class="field-group field-group-fill">
+                        <div class="field-header">
+                            <label for="formControlTextArea2">Ganadores</label>
+                            <span id="resultBadge" class="counter counter-neutral">Sin sorteo</span>
                         </div>
-                    </form>
-                </div>
+                        <div id="winnerReveal" class="winner-reveal" aria-live="polite"></div>
+                        <div id="resultStage" class="result-stage">
+                            <div id="emptyState" class="empty-state">
+                                <strong>Todo listo para empezar</strong>
+                                <p>Cuando ejecutes el sorteo, vas a ver aquí los ganadores numerados y vas a poder copiarlos o exportarlos.</p>
+                            </div>
+                            <textarea class="form-textarea result-area" id="formControlTextArea2" name="resultado"
+                                rows="12" placeholder="Todavía no hay un sorteo realizado" readonly
+                                aria-describedby="resultHelp"></textarea>
+                        </div>
+                        <small id="resultHelp">El resultado se genera automáticamente y queda bloqueado para evitar cambios manuales.</small>
+                    </div>
+
+                    <div class="history-card" aria-live="polite">
+                        <span class="summary-label">Ganadores acumulados excluidos</span>
+                        <p id="historyText">Todavía no se excluyeron ganadores previos.</p>
+                    </div>
+
+                    <div class="actions">
+                        <button type="button" id="copyButton" class="btn btn-tertiary">Copiar resultado</button>
+                        <button type="button" id="exportButton" class="btn btn-ghost">Exportar TXT</button>
+                        <button type="button" id="clearHistoryButton" class="btn btn-ghost">Borrar historial</button>
+                    </div>
+                </article>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p>Creado por E.G.</p>
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/in/emanuel-guzzetti/" target="_blank" rel="noopener noreferrer"
+                    aria-label="Perfil de LinkedIn">
+                    <img src="./media/linkedin.png" alt="">
+                </a>
+                <a href="https://github.com/emanuelhg" target="_blank" rel="noopener noreferrer"
+                    aria-label="Perfil de GitHub">
+                    <img src="./media/github.png" alt="">
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+    <div id="confirmDialog" class="confirm-dialog" hidden>
+        <div class="confirm-card" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmMessage">
+            <p id="confirmTitle" class="confirm-title">Confirmar acción</p>
+            <p id="confirmMessage" class="confirm-message"></p>
+            <div class="confirm-actions">
+                <button type="button" id="confirmCancelButton" class="btn btn-secondary">Cancelar</button>
+                <button type="button" id="confirmAcceptButton" class="btn btn-primary">Continuar</button>
             </div>
         </div>
-    </section>
-    <footer>
-        <div class="text-center">
-            <p style="margin-bottom: 0px; padding-top: 16px;">by E.G.</p>
-            <a href="https://www.linkedin.com/in/emanuel-guzzetti/" target="_blank" rel="noopener noreferrer">
-                <img src="./media/linkedin.png" alt="linkedin" />
-            </a>
-            <a href="https://github.com/emanuelhg" target="_blank" rel="noopener noreferrer">
-                <img src="./media/github.png" alt="github" />
-            </a>
-        </div>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
-    </script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    </div>
+
+    <script src="raffle-core.js"></script>
     <script src="scripts.js"></script>
 </body>
 

@@ -1,0 +1,16 @@
+{
+  "name": "Sorteo Simple",
+  "short_name": "Sorteo",
+  "description": "Herramienta simple para sortear ganadores de forma aleatoria.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff7ed",
+  "theme_color": "#ef7c41",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
