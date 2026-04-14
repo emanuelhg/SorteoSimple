@@ -782,12 +782,40 @@ input[type="number"]:focus,
     }
 
     .hero-topbar {
-        align-items: flex-start;
-        flex-direction: column;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .eyebrow {
+        margin-bottom: 0;
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
     }
 
     .hero-title {
         gap: 12px;
+        margin-top: 10px;
+    }
+
+    .language-switcher {
+        gap: 2px;
+        padding: 3px;
+        border-color: rgba(148, 163, 184, 0.12);
+        background: rgba(255, 255, 255, 0.52);
+        box-shadow: none;
+    }
+
+    .lang-button {
+        min-width: 34px;
+        min-height: 28px;
+        padding: 0 8px;
+        font-size: 0.72rem;
+        color: var(--text-soft);
+    }
+
+    .lang-button.is-active {
+        box-shadow: none;
     }
 
     .hero-copy {
